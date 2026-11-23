@@ -2,58 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { Badge, Button, Icon, Skeleton } from '@/ui';
 import { AppShell, Breadcrumbs, PageLayout } from '@/components/Layout';
-import {
-  Gallery,
-  ListingActions,
-  ListingCard,
-  SearchBar,
-  SearchFilters,
-  Sorting,
-} from '@/components/Realty';
+import { Gallery, ListingActions, ListingCard, SearchFilters, Sorting } from '@/components/Realty';
 import { filterListings, listingLabel, listings, resultsLabel } from '@/data/listings';
 import { usePrototype } from '@/hooks/prototype-context';
+import { rememberSearch, saveSearch } from '@/data/home';
 import s from './PrototypePages.module.css';
-
-export function HomePage() {
-  return (
-    <AppShell>
-      <main id="main">
-        <section className={s.hero}>
-          <div className={s.heroInner}>
-            <span className={s.location}>
-              <Icon name="MapLocation16" size={16} /> Москва
-            </span>
-            <h1>Циан помогает въехать</h1>
-            <SearchBar />
-          </div>
-        </section>
-        <section className={s.recommendations}>
-          <div className={s.sectionHeader}>
-            <h2>Могут подойти</h2>
-            <Link to="/search">
-              Все объявления <Icon name="ActionChevronRight16" size={16} />
-            </Link>
-          </div>
-          <div className={s.cardGrid}>
-            {listings.slice(0, 4).map((listing) => (
-              <ListingCard key={listing.id} listing={listing} compact />
-            ))}
-          </div>
-          <div className={s.localBanner}>
-            <div>
-              <Badge tone="main">Найдите своё место</Badge>
-              <h2>Квартира рядом с любимым парком</h2>
-              <p>Собрали предложения в Сокольниках — для прогулок и спокойной жизни.</p>
-            </div>
-            <Link className={s.primaryLink} to="/search?q=Сокольники">
-              Посмотреть квартиры →
-            </Link>
-          </div>
-        </section>
-      </main>
-    </AppShell>
-  );
-}
 
 function ResultsSkeleton() {
   return (
@@ -78,6 +31,19 @@ export function SearchPage() {
   const { favorites, showDemo, notify } = usePrototype();
   const [loading, setLoading] = useState(true);
   const signature = params.toString();
+  useEffect(() => {
+    if (params.get('favorites') === '1' || params.has('state')) return;
+    rememberSearch({
+      label: params.get('q') || 'Квартиры в Москве',
+      detail: [
+        params.get('rooms') ? `${params.get('rooms')} комн.` : 'Купить квартиру',
+        params.get('maxPrice')
+          ? `до ${Number(params.get('maxPrice')).toLocaleString('ru-RU')} ₽`
+          : 'Москва',
+      ].join(' · '),
+      url: `/search${signature ? `?${signature}` : ''}`,
+    });
+  }, [params, signature]);
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 280);
     return () => clearTimeout(timer);
@@ -122,9 +88,23 @@ export function SearchPage() {
           </Button>
           <button
             className={s.saveSearch}
-            onClick={() =>
-              notify('Параметры поиска сохранены в ссылке. Скопируйте адрес страницы.')
-            }
+            onClick={() => {
+              const ok = saveSearch({
+                label: params.get('q') || 'Квартиры в Москве',
+                detail: [
+                  params.get('rooms') ? `${params.get('rooms')} комн.` : 'Купить квартиру',
+                  params.get('maxPrice')
+                    ? `до ${Number(params.get('maxPrice')).toLocaleString('ru-RU')} ₽`
+                    : 'Москва',
+                ].join(' · '),
+                url: `/search${signature ? `?${signature}` : ''}`,
+              });
+              notify(
+                ok
+                  ? 'Поиск сохранён — он появится на главной'
+                  : 'Не удалось сохранить поиск: хранилище недоступно',
+              );
+            }}
           >
             Сохранить поиск
           </button>
@@ -200,7 +180,8 @@ export function DetailPage() {
   const listing = listings.find((item) => item.id === id);
   const { notify } = usePrototype();
   const from =
-    typeof location.state?.from === 'string' && location.state.from.startsWith('/search')
+    typeof location.state?.from === 'string' &&
+    (location.state.from.startsWith('/search') || /^\/(\?|$)/.test(location.state.from))
       ? location.state.from
       : '/search';
   if (!listing) return <NotFoundPage />;
@@ -215,7 +196,7 @@ export function DetailPage() {
           ]}
         />
         <Link className={s.back} to={from}>
-          ← К результатам поиска
+          {from.startsWith('/search') ? '← К результатам поиска' : '← На главную'}
         </Link>
         <div className={s.detailLabels}>
           <Badge tone="positive">Хорошая цена</Badge>
