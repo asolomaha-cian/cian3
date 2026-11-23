@@ -10,12 +10,23 @@ import {
   PatternsPage,
   NotFoundPage,
 } from './pages/PrototypePages';
+import { ScenarioMapPage } from './pages/ScenarioMapPage';
+import { trackScenarioScreen } from './analytics/metrika';
 export default function App() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = pathname === '/ui' ? 'Циан · UI kit' : 'Циан · Прототипы';
-  }, [pathname]);
+    const screen =
+      pathname === '/'
+        ? new URLSearchParams(search).get('user') === 'returning'
+          ? 'home_returning'
+          : 'home'
+        : pathname.startsWith('/explore')
+          ? 'vertical'
+          : pathname.split('/')[1] || 'home';
+    trackScenarioScreen(screen);
+  }, [pathname, search]);
   return (
     <PrototypeProvider>
       <Routes>
@@ -26,6 +37,7 @@ export default function App() {
         <Route path="/ui" element={<UIKitPage prototype />} />
         <Route path="/guide" element={<GuidePage />} />
         <Route path="/patterns" element={<PatternsPage />} />
+        <Route path="/map" element={<ScenarioMapPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </PrototypeProvider>

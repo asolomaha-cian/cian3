@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { Badge, Button, Icon, Input, Modal, Select } from '@/ui';
 import { usePrototype } from '@/hooks/prototype-context';
 import { listingLabel, money, type Listing } from '@/data/listings';
+import { reachMetrikaGoal } from '@/analytics/metrika';
 import s from './Realty.module.css';
 
 export function FavoriteButton({ listing }: { listing: Listing }) {
@@ -30,7 +31,13 @@ export function ListingCard({ listing, compact = false }: { listing: Listing; co
   return (
     <article className={clsx(s.card, compact && s.compact)}>
       <div className={s.photo}>
-        <Link to={to} state={state} tabIndex={-1} aria-hidden="true">
+        <Link
+          to={to}
+          state={state}
+          tabIndex={-1}
+          aria-hidden="true"
+          onClick={() => reachMetrikaGoal('home_scenario_listing_open', { step: 'listing_open', listing_id: listing.id, source: 'search_photo' })}
+        >
           <img src={listing.images[0]} alt="" loading="lazy" />
         </Link>
         <FavoriteButton listing={listing} />
@@ -46,7 +53,12 @@ export function ListingCard({ listing, compact = false }: { listing: Listing; co
         </span>
       </div>
       <div className={s.cardBody}>
-        <Link className={s.cardTitle} to={to} state={state}>
+        <Link
+          className={s.cardTitle}
+          to={to}
+          state={state}
+          onClick={() => reachMetrikaGoal('home_scenario_listing_open', { step: 'listing_open', listing_id: listing.id, source: 'search_card' })}
+        >
           {listingLabel(listing)}
         </Link>
         <strong className={s.price}>{money(listing.price)}</strong>
