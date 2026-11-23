@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { UIKitPage } from './pages/UIKitPage';
 import { PrototypeProvider } from './hooks/PrototypeContext';
+import { MobileHomePage, ExplorePage } from './pages/MobileHomePage';
 import {
-  HomePage,
   SearchPage,
   DetailPage,
   GuidePage,
@@ -19,7 +19,8 @@ export default function App() {
   return (
     <PrototypeProvider>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<MobileHomePage />} />
+        <Route path="/explore/:vertical" element={<ExplorePage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/listing/:id" element={<DetailPage />} />
         <Route path="/ui" element={<UIKitPage prototype />} />
