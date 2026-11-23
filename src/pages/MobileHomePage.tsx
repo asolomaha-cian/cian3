@@ -114,8 +114,71 @@ export function MobileHomePage() {
                 </h1>
               </div>
               <div className={s.brandMark} aria-hidden="true">
-                <span />
-                <i />
+                <svg viewBox="0 0 160 150" fill="none">
+                  <defs>
+                    <linearGradient
+                      id="home-roof"
+                      x1="34"
+                      y1="30"
+                      x2="121"
+                      y2="84"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#7595ff" />
+                      <stop offset="1" stopColor="#2454e8" />
+                    </linearGradient>
+                    <linearGradient
+                      id="home-wall"
+                      x1="57"
+                      y1="66"
+                      x2="100"
+                      y2="133"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="white" />
+                      <stop offset="1" stopColor="#d4dfff" />
+                    </linearGradient>
+                    <filter
+                      id="home-shadow"
+                      x="0"
+                      y="0"
+                      width="160"
+                      height="160"
+                      filterUnits="userSpaceOnUse"
+                    >
+                      <feDropShadow
+                        dx="0"
+                        dy="9"
+                        stdDeviation="7"
+                        floodColor="#234cba"
+                        floodOpacity=".18"
+                      />
+                    </filter>
+                  </defs>
+                  <circle cx="83" cy="81" r="60" fill="#e1e8ff" />
+                  <ellipse cx="82" cy="128" rx="48" ry="7" fill="#c8d4fb" opacity=".65" />
+                  <g filter="url(#home-shadow)">
+                    <path d="m42 74 44-29 38 30v43l-43 17-39-22Z" fill="url(#home-wall)" />
+                    <path d="m81 83 43-8v43l-43 17Z" fill="#adc1f8" />
+                    <path d="m27 75 52-47 57 41-16 13-40-28-38 33Z" fill="url(#home-roof)" />
+                    <path d="m80 54 40 28 16-13-55-40Z" fill="#315bd9" />
+                    <path d="m98 37 12 6v-20l-12-5Z" fill="#5279e8" />
+                    <path d="m110 43 8-5V19l-8 4Z" fill="#3154b7" />
+                    <path d="m56 93 14 5v28l-14-5Z" fill="#3262e7" />
+                    <path d="m94 93 15-5v16l-15 5Z" fill="#f7faff" />
+                    <path d="m102 91 0 16m-8-6 15-5" stroke="#b6c9f6" strokeWidth="2" />
+                    <circle cx="66" cy="111" r="1.5" fill="#c4f58b" />
+                  </g>
+                  <path d="m26 30 3 8 8 3-8 3-3 8-3-8-8-3 8-3Z" fill="#80aa3f" />
+                  <circle cx="136" cy="102" r="8" fill="#bce98a" />
+                  <circle cx="139" cy="37" r="3" fill="#6487f0" />
+                  <path
+                    d="m15 104 6-6m-2 11 6-6"
+                    stroke="#8ea8ee"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </div>
             </div>
             <form
@@ -200,7 +263,14 @@ export function MobileHomePage() {
                         <img src={item.images[0]} alt="" loading={index < 2 ? 'eager' : 'lazy'} />
                       </Link>
                       <FavoriteButton listing={item} />
-                      {index === 0 && <span className={s.photoLabel}>Хорошая цена</span>}
+                      {index === 0 && (
+                        <span className={s.photoLabel}>
+                          <span aria-hidden="true">✦</span> Хорошая цена
+                        </span>
+                      )}
+                      {(index === 0 || index === 3) && (
+                        <span className={s.photoCaption}>МЕСТО ДЛЯ ВАШЕЙ ИСТОРИИ</span>
+                      )}
                     </div>
                     <Link
                       className={s.cardLink}
