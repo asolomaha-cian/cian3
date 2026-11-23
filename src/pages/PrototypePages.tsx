@@ -6,6 +6,7 @@ import { Gallery, ListingActions, ListingCard, SearchFilters, Sorting } from '@/
 import { filterListings, listingLabel, listings, resultsLabel } from '@/data/listings';
 import { usePrototype } from '@/hooks/prototype-context';
 import { rememberSearch, saveSearch } from '@/data/home';
+import { reachMetrikaGoal } from '@/analytics/metrika';
 import s from './PrototypePages.module.css';
 
 function ResultsSkeleton() {
@@ -195,7 +196,16 @@ export function DetailPage() {
             { label: listing.district },
           ]}
         />
-        <Link className={s.back} to={from}>
+        <Link
+          className={s.back}
+          to={from}
+          onClick={() =>
+            reachMetrikaGoal('home_scenario_back_to_results', {
+              step: 'return_to_results',
+              destination: from.startsWith('/search') ? 'search' : 'home',
+            })
+          }
+        >
           {from.startsWith('/search') ? '← К результатам поиска' : '← На главную'}
         </Link>
         <div className={s.detailLabels}>

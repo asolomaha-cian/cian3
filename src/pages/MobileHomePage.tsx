@@ -12,6 +12,7 @@ import {
   verticals,
 } from '@/data/home';
 import { usePrototype } from '@/hooks/prototype-context';
+import { reachMetrikaGoal } from '@/analytics/metrika';
 import s from './MobileHomePage.module.css';
 
 function Drawing({ name }: { name: string }) {
@@ -89,6 +90,10 @@ export function MobileHomePage() {
   );
   function search() {
     const url = query.trim() ? `/search?q=${encodeURIComponent(query.trim())}` : '/search';
+    reachMetrikaGoal('home_scenario_search_submit', {
+      step: 'home_search',
+      has_query: Boolean(query.trim()),
+    });
     rememberSearch({ label: query.trim() || 'Квартиры в Москве', detail: 'Покупка квартиры', url });
     navigate(url);
   }
@@ -204,7 +209,16 @@ export function MobileHomePage() {
             </form>
             <nav className={s.verticals} aria-label="Недвижимость по задачам">
               {verticals.map((v) => (
-                <Link key={v.id} to={v.id === 'buy' ? '/search' : `/explore/${v.id}`}>
+                <Link
+                  key={v.id}
+                  to={v.id === 'buy' ? '/search' : `/explore/${v.id}`}
+                  onClick={() =>
+                    reachMetrikaGoal('home_scenario_vertical_open', {
+                      step: 'vertical_select',
+                      vertical: v.id,
+                    })
+                  }
+                >
                   <span className={`${s.verticalIcon} ${s[v.id]}`}>
                     <Drawing name={v.icon} />
                   </span>
@@ -213,7 +227,11 @@ export function MobileHomePage() {
               ))}
             </nav>
             {resume && (
-              <Link className={s.resume} to={resume.url}>
+              <Link
+                className={s.resume}
+                to={resume.url}
+                onClick={() => reachMetrikaGoal('home_scenario_resume_search', { step: 'resume_search' })}
+              >
                 <span className={s.resumeIcon}>
                   <Drawing name="bookmark" />
                 </span>
@@ -256,6 +274,13 @@ export function MobileHomePage() {
                     <div className={s.photo}>
                       <Link
                         to={`/listing/${item.id}`}
+                        onClick={() =>
+                          reachMetrikaGoal('home_scenario_recommendation_open', {
+                            step: 'recommendation_open',
+                            listing_id: item.id,
+                            source: 'photo',
+                          })
+                        }
                         state={{ from: '/' + (params.size ? `?${params}` : '') }}
                         tabIndex={-1}
                         aria-hidden="true"
@@ -275,6 +300,13 @@ export function MobileHomePage() {
                     <Link
                       className={s.cardLink}
                       to={`/listing/${item.id}`}
+                      onClick={() =>
+                        reachMetrikaGoal('home_scenario_recommendation_open', {
+                          step: 'recommendation_open',
+                          listing_id: item.id,
+                          source: 'card',
+                        })
+                      }
                       state={{ from: '/' + (params.size ? `?${params}` : '') }}
                     >
                       <strong>{money(item.price)}</strong>

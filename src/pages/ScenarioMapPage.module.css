@@ -1,0 +1,29 @@
+.page {
+  min-height: 100vh;
+  padding: 44px max(24px, calc((100vw - 1200px) / 2));
+  background: #f4f7ff;
+}
+.header { max-width: 780px; }
+.back { display: inline-block; margin-bottom: 22px; font-size: 14px; font-weight: 700; }
+.header > span { margin-bottom: 16px; }
+.header h1 { font-size: 42px; line-height: 1.1; letter-spacing: -1.2px; margin: 12px 0 14px; }
+.header > p { color: var(--text-secondary-default); max-width: 680px; }
+.map, .experiment { margin-top: 38px; border: 1px solid #dce4fb; border-radius: 20px; background: #fff; padding: 28px; box-shadow: 0 12px 36px #234cba0d; }
+.mapHeading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 24px; }
+.mapHeading h2, .experiment h2 { font-size: 24px; }
+.mapHeading span { color: var(--text-secondary-default); font-size: 13px; }
+.flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; padding: 8px 0; }
+.screen { padding: 12px; border: 1px solid #dce4fb; border-radius: 14px; background: #fff; min-width: 0; box-shadow: 0 4px 12px #234cba0d; }
+.screenLink { display: flex; flex-direction: column; gap: 12px; color: var(--text-primary-default); text-decoration: none; }
+.screenLink:hover { text-decoration: none; }
+.screen h3 { font-size: 16px; line-height: 20px; margin: 4px 0 6px; }
+.screen p { font-size: 12px; line-height: 16px; color: var(--text-secondary-default); }
+.screen > code { display: block; font-size: 10px; line-height: 14px; color: #315bd9; background: #edf2ff; border-radius: 5px; padding: 6px; margin-top: 10px; overflow-wrap: anywhere; }
+.transitionList { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 22px; padding-top: 22px; border-top: 1px dashed #cbd7f3; }
+.transition { min-width: 0; padding: 10px; border: 1px solid #dce4fb; border-radius: 10px; background: #f9faff; }
+.route { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-primary-default); }.route i { color: #315bd9; font-size: 19px; font-style: normal; }.transition code { display: block; margin-top: 6px; color: #315bd9; font-size: 10px; line-height: 14px; overflow-wrap: anywhere; }
+.preview { height: 140px; border: 1px solid #ced9f7; border-radius: 8px; background: #f9faff; padding: 7px; overflow: hidden; }
+.preview i { display: block; border-radius: 3px; background: #dfe7fb; }.previewHeader { height: 8px; width: 36%; margin-bottom: 10px; background: #335edc !important; }.searchLine { height: 14px; margin-bottom: 8px; background: #fff !important; border: 1px solid #d9e1f5; }.pills, .tiles, .cards, .filters { display: flex; gap: 4px; margin-bottom: 7px; }.pills i { height: 12px; flex: 1; }.tiles i { height: 24px; flex: 1; background: #edf2ff; }.cards i { height: 45px; flex: 1; background: linear-gradient(#b4c7fb 55%, #fff 55%); }.savedSearch { height: 28px; margin-bottom: 8px; background: #e1f2cf !important; }.filters i { height: 14px; flex: 1; }.resultRows { display: grid; gap: 6px; }.resultRows i { height: 28px; background: linear-gradient(90deg, #c4d2fb 36%, #f0f3fc 36%); }.heroPhoto { height: 56px; margin-bottom: 9px; background: #b7c8f6 !important; }.titleLine { height: 12px; width: 86%; margin-bottom: 6px; }.textLine { height: 8px; width: 66%; margin-bottom: 12px; }.actionLine { height: 18px; width: 100%; background: #315bd9 !important; }
+.experiment { display: grid; grid-template-columns: 260px 1fr; gap: 42px; }.experiment > div > span { margin-bottom: 14px; }.experiment h2 { margin-top: 12px; }.experiment dl { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 28px; margin: 0; }.experiment dl div { border-top: 1px solid var(--stroke-divider-default); padding-top: 12px; }.experiment dt { font-size: 13px; font-weight: 700; margin-bottom: 5px; }.experiment dd { margin: 0; font-size: 14px; line-height: 20px; color: var(--text-secondary-default); }.experiment code { font-size: 12px; color: #315bd9; }
+@media (max-width: 1000px) { .flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }.transitionList { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 860px) { .page { padding: 28px 16px; }.header h1 { font-size: 32px; }.map, .experiment { padding: 18px; border-radius: 14px; }.flow, .transitionList { grid-template-columns: 1fr; }.experiment { display: block; }.experiment > div { margin-bottom: 24px; }.experiment dl { grid-template-columns: 1fr; gap: 16px; } }
