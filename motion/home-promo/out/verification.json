@@ -1,0 +1,53 @@
+{
+  "file": "cian-home-promo.mp4",
+  "bytes": 3834918,
+  "megabytes": 3.83,
+  "sha256": "afc267be1afd240c75f695b48c0a93d64994c8063de53a57f83947c0be2d1ea5",
+  "slogan": "Циан помогает въехать",
+  "voiceover": false,
+  "music": "Synthesized temporary instrumental track, product-motion music.py",
+  "media": {
+    "size": "1920x1080",
+    "frames": "450",
+    "duration": "15.000000",
+    "color": "bt709",
+    "audio": true,
+    "lufs": -15.74,
+    "true_peak": -5.6,
+    "problems": [],
+    "sheet": "motion/home-promo/out/cian-home-promo_sheet.jpg"
+  },
+  "scene_checks": {
+    "report": {
+      "h": {
+        "duration": 15,
+        "fps": 30,
+        "font": "Lato",
+        "font_loaded": true,
+        "checked_times": [
+          0.0,
+          1.0,
+          3.5,
+          4.5,
+          6.0,
+          7.5,
+          9.2,
+          10.8,
+          12.5,
+          14.5
+        ],
+        "deterministic": true,
+        "cues": 0,
+        "cues_source": "оценка по тексту",
+        "warnings": []
+      }
+    },
+    "fails": []
+  },
+  "project_checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "test": "18 passed",
+    "build": "passed"
+  }
+}
