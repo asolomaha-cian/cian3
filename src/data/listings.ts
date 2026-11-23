@@ -151,7 +151,7 @@ export const listings: Listing[] = rows.map(
     description:
       'Светлая квартира с удобной планировкой. Отдельные комнаты, просторная кухня и много места для хранения. Окна выходят в тихий двор. Рядом парк, магазины и всё необходимое для повседневной жизни. Можно спланировать рабочее место у окна и обеденную зону для встреч с друзьями.',
     images: [
-      `/images/apartment-${index + 1}.webp`,
+      index === 0 ? '/images/hero.jpg' : `/images/apartment-${index + 1}.webp`,
       `/images/apartment-${((index + 1) % 8) + 1}.webp`,
       `/images/apartment-${((index + 2) % 8) + 1}.webp`,
     ],
